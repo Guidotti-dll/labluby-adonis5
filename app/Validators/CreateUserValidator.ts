@@ -5,12 +5,19 @@ export default class CreateUserValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    username: schema.string({}, [
+    username: schema.string({ trim: true }, [
       rules.required(),
       rules.unique({ table: 'users', column: 'username' }),
     ]),
-    email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
-    password: schema.string({}, [rules.required(), rules.confirmed(), rules.minLength(8)]),
+    email: schema.string({ trim: true }, [
+      rules.email(),
+      rules.unique({ table: 'users', column: 'email' }),
+    ]),
+    password: schema.string({ trim: true }, [
+      rules.required(),
+      rules.confirmed(),
+      rules.minLength(8),
+    ]),
   })
 
   public messages = {
@@ -18,6 +25,6 @@ export default class CreateUserValidator {
     unique: 'The {{ field }} not available',
     email: 'The {{field}} should be a valid email address',
     confirmed: 'The {{field}} confirmation does not match.',
-    minLength: 'The {{field}} should not be less than {{options.minLength}}.',
+    minLength: 'The {{field}} should not be less than {{options.minLength}}',
   }
 }
