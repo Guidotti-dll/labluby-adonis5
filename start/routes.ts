@@ -21,6 +21,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.post('sessions', 'SessionsController.store')
+Route.post('forgot-password', 'ForgotPasswordsController.store')
 Route.post('users', 'UsersController.store')
 
 Route.group(() => {
