@@ -1,3 +1,4 @@
+import Mail from '@ioc:Adonis/Addons/Mail'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import ForgotPasswordValidator from 'App/Validators/ForgotPasswordValidator'
@@ -10,11 +11,23 @@ export default class ForgotPasswordsController {
     try {
       const { email, redirect_url: redirectUrl } = await request.validate(ForgotPasswordValidator)
 
-      console.log(redirectUrl)
       const user = await User.findByOrFail('email', email)
 
       user.reset_token = crypto.randomBytes(10).toString('hex')
       user.token_created_at = new Date()
+
+      await Mail.sendLater((message) => {
+        message
+          .from('contato@email.com')
+          .to(user.email)
+          .subject('Forgot Password')
+          .htmlView('emails/forgot_password', {
+            email: user.email,
+            token: user.reset_token,
+            link: `${redirectUrl}?token=${user.reset_token}`,
+          })
+      })
+
       await user.save()
     } catch (error) {
       if (error.message === 'E_ROW_NOT_FOUND: Row not found') {
