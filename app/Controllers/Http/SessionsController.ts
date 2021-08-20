@@ -8,10 +8,10 @@ export default class SessionsController {
 
     try {
       const token = await auth.use('api').attempt(email, password)
-      const user = await User.findByOrFail('email', email)
+      const user = await User.findBy('email', email)
       return { user, token }
     } catch {
-      return response.badRequest('Invalid credentials')
+      return response.status(400).send({ error: 'Invalid credentials' })
     }
   }
 }
