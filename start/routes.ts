@@ -20,5 +20,9 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.resource('users', 'UsersController').apiOnly()
 Route.post('sessions', 'SessionsController.store')
+Route.post('users', 'UsersController.store')
+
+Route.group(() => {
+  Route.resource('users', 'UsersController').apiOnly().only(['show', 'destroy', 'update'])
+}).middleware('auth')
