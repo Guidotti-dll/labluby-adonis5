@@ -21,6 +21,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.post('sessions', 'SessionsController.store')
+Route.post('files', 'FilesController.store')
 Route.post('forgot-password', 'ForgotPasswordsController.store')
 Route.patch('reset-password', 'ForgotPasswordsController.update')
 Route.post('users', 'UsersController.store')
