@@ -21,11 +21,12 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.post('sessions', 'SessionsController.store')
-Route.post('files', 'FilesController.store')
 Route.post('forgot-password', 'ForgotPasswordsController.store')
 Route.patch('reset-password', 'ForgotPasswordsController.update')
 Route.post('users', 'UsersController.store')
 
 Route.group(() => {
   Route.resource('users', 'UsersController').apiOnly().only(['show', 'destroy', 'update'])
+  Route.post('files', 'FilesController.store')
+  Route.get('files/:id', 'FilesController.show')
 }).middleware('auth')

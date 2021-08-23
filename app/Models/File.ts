@@ -17,6 +17,9 @@ export default class File extends BaseModel {
   @column()
   public subtype: string
 
+  @column()
+  public url: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

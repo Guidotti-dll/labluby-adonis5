@@ -10,6 +10,7 @@ export default class Files extends BaseSchema {
       table.string('name').notNullable()
       table.string('type', 20)
       table.string('subtype', 20)
+      table.string('url')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
