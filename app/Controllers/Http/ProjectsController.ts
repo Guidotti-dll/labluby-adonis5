@@ -18,6 +18,7 @@ export default class ProjectsController {
 
       return project
     } catch (error) {
+      console.log(error)
       return response.status(error.status).send({ error: error.message })
     }
   }

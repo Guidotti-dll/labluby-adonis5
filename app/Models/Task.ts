@@ -18,7 +18,7 @@ export default class Task extends BaseModel {
   public user_id: number
 
   @column()
-  public project_id: number
+  public projectId: number
 
   @column()
   public file_id: number
@@ -37,9 +37,7 @@ export default class Task extends BaseModel {
   })
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => Project, {
-    foreignKey: 'project_id',
-  })
+  @belongsTo(() => Project)
   public project: BelongsTo<typeof Project>
 
   @belongsTo(() => File, {
