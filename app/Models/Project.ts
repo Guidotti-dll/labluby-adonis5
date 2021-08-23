@@ -13,13 +13,18 @@ export default class Project extends BaseModel {
   @column()
   public description: string
 
+  @column()
+  public user_id: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'user_id',
+  })
   public user: BelongsTo<typeof User>
 
   @hasMany(() => Task)
