@@ -14,18 +14,36 @@ export default class Task extends BaseModel {
   @column()
   public description: string
 
+  @column()
+  public user_id: number
+
+  @column()
+  public project_id: number
+
+  @column()
+  public file_id: number
+
+  @column.dateTime({ autoCreate: true })
+  public due_date: DateTime
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'user_id',
+  })
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => Project)
+  @belongsTo(() => Project, {
+    foreignKey: 'project_id',
+  })
   public project: BelongsTo<typeof Project>
 
-  @belongsTo(() => File)
+  @belongsTo(() => File, {
+    foreignKey: 'file_id',
+  })
   public file: BelongsTo<typeof File>
 }

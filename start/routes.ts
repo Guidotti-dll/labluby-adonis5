@@ -27,6 +27,8 @@ Route.post('users', 'UsersController.store')
 
 Route.group(() => {
   Route.resource('users', 'UsersController').apiOnly().only(['show', 'destroy', 'update'])
+  Route.resource('projects', 'ProjectsController').apiOnly()
+  Route.resource('projects.tasks', 'TasksController').apiOnly()
   Route.post('files', 'FilesController.store')
   Route.get('files/:id', 'FilesController.show')
 }).middleware('auth')

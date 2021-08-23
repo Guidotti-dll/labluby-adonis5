@@ -30,6 +30,7 @@ export default class Tasks extends BaseSchema {
         .onDelete('SET NULL')
       table.string('title').notNullable()
       table.text('description')
+      table.timestamp('due_date')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
