@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import RowNotFoundException from 'App/Exceptions/RowNotFoundException'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class UsersController {
   public async index({}: HttpContextContract) {
@@ -12,12 +13,14 @@ export default class UsersController {
 
   public async store({ request, response }: HttpContextContract) {
     try {
+      const trx = await Database.transaction()
       const data = await request.validate(CreateUserValidator)
       const addresses = await request.input('addresses')
 
-      const user = await User.create(data)
+      const user = await User.create(data, trx)
       await user.related('addresses').createMany(addresses)
 
+      await trx.commit()
       return user
     } catch (error) {
       response.badRequest(error.messages)
