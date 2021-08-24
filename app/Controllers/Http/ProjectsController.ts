@@ -4,8 +4,9 @@ import Project from 'App/Models/Project'
 import CreateProjectValidator from 'App/Validators/CreateProjectValidator'
 
 export default class ProjectsController {
-  public async index({}: HttpContextContract) {
-    const projects = await Project.query().preload('user')
+  public async index({ request }: HttpContextContract) {
+    const { page, perPage } = request.qs()
+    const projects = await Project.query().preload('user').paginate(page, perPage)
 
     return projects
   }
