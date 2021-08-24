@@ -13,8 +13,10 @@ export default class UsersController {
   public async store({ request, response }: HttpContextContract) {
     try {
       const data = await request.validate(CreateUserValidator)
+      const addresses = await request.input('addresses')
 
       const user = await User.create(data)
+      await user.related('addresses').createMany(addresses)
 
       return user
     } catch (error) {

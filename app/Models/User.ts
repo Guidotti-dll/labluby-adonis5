@@ -3,6 +3,7 @@ import { BaseModel, column, beforeSave, HasMany, hasMany } from '@ioc:Adonis/Luc
 import Hash from '@ioc:Adonis/Core/Hash'
 import Task from './Task'
 import Project from './Project'
+import UserAddress from './UserAddress'
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: number
@@ -34,6 +35,9 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password)
     }
   }
+
+  @hasMany(() => UserAddress)
+  public addresses: HasMany<typeof UserAddress>
 
   @hasMany(() => Project)
   public projects: HasMany<typeof Project>
