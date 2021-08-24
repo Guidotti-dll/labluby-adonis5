@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import RowNotFoundException from 'App/Exceptions/RowNotFoundException'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
@@ -22,9 +23,13 @@ export default class UsersController {
   }
 
   public async show({ params }: HttpContextContract) {
-    const user = await User.findByOrFail('id', params.id)
+    try {
+      const user = await User.findByOrFail('id', params.id)
 
-    return user
+      return user
+    } catch (error) {
+      throw new RowNotFoundException(error.message, error.status, error.code)
+    }
   }
 
   public async update({ params, request }: HttpContextContract) {

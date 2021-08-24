@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import RowNotFoundException from 'App/Exceptions/RowNotFoundException'
 import Project from 'App/Models/Project'
 import CreateProjectValidator from 'App/Validators/CreateProjectValidator'
 
@@ -9,7 +10,7 @@ export default class ProjectsController {
     return projects
   }
 
-  public async show({ params, response }: HttpContextContract) {
+  public async show({ params }: HttpContextContract) {
     try {
       const project = await Project.findByOrFail('id', params.id)
 
@@ -18,8 +19,7 @@ export default class ProjectsController {
 
       return project
     } catch (error) {
-      console.log(error)
-      return response.status(error.status).send({ error: error.message })
+      throw new RowNotFoundException(error.message, error.status, error.code)
     }
   }
 
