@@ -19,6 +19,9 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+Route.get('/', async () => {
+  return { hello: 'worsssldssss' }
+})
 
 Route.post('sessions', 'SessionsController.store')
 Route.post('forgot-password', 'ForgotPasswordsController.store')

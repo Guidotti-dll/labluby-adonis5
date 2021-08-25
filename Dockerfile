@@ -6,11 +6,10 @@ WORKDIR /home/node/app
 
 COPY package.json yarn.* ./
 
-COPY . /home/node/app/
-
-
 RUN yarn
+
+COPY . /home/node/app/
 
 EXPOSE 3333
 
-ENTRYPOINT ["node","ace","serve","--watch"]
+CMD ["node","ace","serve","--watch"]
